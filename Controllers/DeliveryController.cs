@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using DeliveryAPI.Models;
+using Repository;
 
 namespace DeliveryAPI.Controllers
 {
@@ -8,23 +9,20 @@ namespace DeliveryAPI.Controllers
 
     public class DeliveryController : ControllerBase
     {
-        private static List<Delivery> deliverys = new List<Delivery>();
-        private static int id = 1;
-        private static int numOfDelivery = 1;
+        DeliveryRepository repository = new DeliveryRepository();
 
         [HttpPost]
-        public void RegistrationDelivery([FromBody] Delivery delivery)
+        public void SaveDelivery([FromBody] Delivery delivery)
         {
-            delivery.NumOfDelivery = numOfDelivery++;
-            delivery.Id = id++;
-            deliverys.Add(delivery);
 
+            repository.RegistrationDelivery(delivery);
         }
 
         [HttpGet]
-        public List<Delivery> GetDelivery()
+        public List<Delivery> GetDeliverys()
         {
-            return deliverys;
+            return repository.GetDeliverys();
         }
     }
+
 }
